@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+       /*  stage('Checkout') {
             steps {
                 git 'https://github.com/AdrianReyhan/calulator.git'
             }
-        }
+        } */
 
         stage('Build Docker Image') {
             steps {
@@ -28,9 +28,17 @@ pipeline {
         }
     }
 
-    post {
-        failure {
-            emailext subject: "Build Failed", body: "Build gagal. Cek Jenkins untuk detail.", to: 'dottitoddi@gmail.com'
-        }
+   post {
+    success {
+        mail to: 'dottitoddi@gmail.com',
+             subject: 'Build Sukses',
+             body: 'Pipeline berhasil.'
     }
+    failure {
+        mail to: 'dottitoddi@gmail.com',
+             subject: 'Build Gagal',
+             body: 'Pipeline gagal. Cek Jenkins.'
+    }
+}
+
 }
