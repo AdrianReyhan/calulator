@@ -4,12 +4,14 @@ WORKDIR /app
 COPY . .
 RUN mvn clean install   
 
-
 # Stage 2: Run Stage
 FROM openjdk:11-jre-slim
 WORKDIR /app
 COPY --from=build /app/target/myapp.jar .
 CMD ["java", "-jar", "myapp.jar"]
+
+
+
 
 
 

@@ -215,7 +215,7 @@ set -- \
         -classpath "$CLASSPATH" \
         -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" \
         "$@"
-
+   
 # Stop when "xargs" is not available.
 if ! command -v xargs >/dev/null 2>&1
 then
