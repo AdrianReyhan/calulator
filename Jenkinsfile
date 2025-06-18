@@ -2,22 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout') {
             steps {
-                sh 'docker build -t myapp-image .'
+                git 'https://github.com/AdrianReyhan/calulator.git'
             }
         }
 
-        stage('Test') {
+        stage("Compile") {
             steps {
-                sh 'docker run --rm myapp-image ./gradlew test'
+                sh "./gradlew compileJava"
             }
         }
+        stage("Unit test") {
+            steps {
+                sh "./gradlew test"
+            }
+          }
     }
 
     post {
         always {
-            echo 'Build selesai.'
+            echo 'Pipeline selesai.'
         }
     }
 }
