@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    stages {
+        // Stage 1: Checkout kode dari repository
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/AdrianReyhan/calulator.git'  
+            }
+        }
+        
+        // Stage 2: Build aplikasi menggunakan Docker
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("myapp-image")  // Membangun Docker image aplikasi
+                }
+            }
+        }
+
+        // Stage 3: Menjalankan Unit Test
+        stage('Test') {
+            steps {
+                script {
+                    docker.image("myapp-image").inside {
+                        // Menjalankan unit tests dalam Docker container
+                        sh './run_tests.sh'  // Perintah untuk menjalankan unit tests
+                    }
+                }
+            }
+        }
+
+        // Stage 4: Laporan Code Quality (Opsional)
+        stage('Code Quality') {
+            steps {
+                script {
+                    // Menambahkan tools seperti SonarQube untuk analisis statis kode
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+
+        // Stage 5: Notifikasi jika build gagal
+        stage('Notify') {
+            steps {
+                script {
+                    if (currentBuild.result == 'FAILURE') {
+                        // Kirim email atau notifikasi lainnya jika build gagal
+                        emailext subject: "Build Failed", body: "Your Jenkins build failed.", to: 'dottitoddi@example.com'
+                    }
+                }
+            }
+        }
+    }
+}
