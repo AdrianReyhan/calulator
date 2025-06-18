@@ -30,7 +30,7 @@ pipeline {
 
     post {
         failure {
-            emailext subject: "Build Failed", body: "Build gagal. Cek Jenkins untuk detail.", to: 'dottitoddi@example.com'
+            emailext subject: "Build Failed", body: "Build gagal. Cek Jenkins untuk detail.", to: 'dottitoddi@gmail.com'
         }
     }
 }
