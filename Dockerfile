@@ -11,8 +11,4 @@ COPY --from=build /app/target/myapp.jar .
 CMD ["java", "-jar", "myapp.jar"]
 
 
-# komen
-
-
-
-
+#pushhh
