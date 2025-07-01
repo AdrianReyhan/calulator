@@ -1,5 +1,3 @@
-#mengotomatisasi proses build dan pengujian aplikasi Java menggunakan Gradle
-
 pipeline {
     agent any
 
