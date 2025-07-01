@@ -11,4 +11,4 @@ COPY --from=build /app/target/myapp.jar .
 CMD ["java", "-jar", "myapp.jar"]
 
 
-#pushhh
+#membuat image Docker dengan dua tahap (multi-stage build)
