@@ -1,5 +1,8 @@
+#mengotomatisasi proses build dan pengujian aplikasi Java menggunakan Gradle
+
 pipeline {
     agent any
+
 
     stages {
         stage('Checkout') {
@@ -10,46 +13,20 @@ pipeline {
 
         stage("Compile") {
             steps {
-                sh "./gradlew build"  // Disarankan untuk menggunakan 'build' agar mencakup lebih dari sekedar kompilasi
+                sh "./gradlew compileJava"
             }
         }
-
-        stage("Unit Test") {
+        stage("Unit test") {
             steps {
-                sh "./gradlew test"  // Menjalankan unit test yang ada
+                sh "./gradlew test"
             }
-        }
-
-        // Optional: Stage untuk quality check menggunakan SonarQube
-        stage('Code Quality Check') {
-            steps {
-                script {
-                    sonarQubeScanner(
-                        installationName: 'SonarQube', 
-                        projectKey: 'calculator-project', 
-                        projectName: 'Calculator Project'
-                    )
-                }
-            }
-        }
-
-        // Optional: Stage untuk mengupload build artifact
-        stage('Publish Artifact') {
-            steps {
-                archiveArtifacts allowEmptyArchive: true, artifacts: '**/build/libs/*.jar', followSymlinks: false
-            }
-        }
+          }
     }
+
 
     post {
         always {
             echo 'Pipeline selesai.'
-        }
-        success {
-            echo 'Build sukses!'
-        }
-        failure {
-            echo 'Build gagal. Harap periksa log untuk detail.'
         }
     }
 }
