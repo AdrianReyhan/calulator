@@ -5,11 +5,11 @@ pipeline {
 
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/AdrianReyhan/calulator.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git 'https://github.com/AdrianReyhan/calulator.git'
+        //     }
+        // }
 
         stage("Compile") {
             steps {
